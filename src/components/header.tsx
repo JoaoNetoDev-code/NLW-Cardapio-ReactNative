@@ -1,6 +1,4 @@
 import { Image, Text, View, TouchableOpacity } from "react-native";
-import { Feather } from "@expo/vector-icons"
-import colors from "tailwindcss/colors"
 import CartQuantity from "./cartQuantity";
 interface IProps {
   title: string;
@@ -20,7 +18,7 @@ const Header = ({title, cartQuantityItems = 0}: IProps) => {
         <Text className="text-white text-xl font-heading">{title}</Text>
       </View>
       {
-        cartQuantityItems > 0 && <CartQuantity cartQuantityItems={0} />
+        cartQuantityItems > 0 && <CartQuantity cartQuantityItems={cartQuantityItems} />
       }
     </View>
   );

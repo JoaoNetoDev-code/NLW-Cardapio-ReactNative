@@ -5,8 +5,10 @@ import { CATEGORIES, MENU } from "@/utils/data/products"
 import Product from '@/components/product';
 import { useRef, useState } from 'react';
 import { Link } from "expo-router"
+import { useCartStore } from '@/stores/cart-store';
 
 const Home = () => {
+  const cartStore = useCartStore()
   const [category, setCategory] = useState<string>(CATEGORIES[0])
 
   const sectionListRef = useRef<SectionList>(null)
@@ -25,9 +27,11 @@ const Home = () => {
     }
   }
 
+  const qtdItems = cartStore.products.reduce((all, unit) => all + unit.quantity, 0)
+
   return (
     <View className="flex-1 pt-8">
-      <Header title="Faça seu pedido" cartQuantityItems={3} />
+      <Header title="Faça seu pedido" cartQuantityItems={qtdItems} />
 
       <FlatList
         data={CATEGORIES}

@@ -1,11 +1,23 @@
 import { Image, View, Text } from "react-native";
-import { useLocalSearchParams } from "expo-router"
+import { useLocalSearchParams, useNavigation } from "expo-router"
 import { PRODUCTS } from "@/utils/data/products"
 import FormatCurrency from "@/utils/functions/format-currency";
+import { Button } from "@/components/button";
+import {Feather} from "@expo/vector-icons"
+import LinkButton from "@/components/link-button";
+import { useCartStore } from "@/stores/cart-store"
 
 const Product = () => {
+  const cartStore = useCartStore()
   const { id } = useLocalSearchParams()
+  const navgation = useNavigation()
+
   const product = PRODUCTS.filter((product) => product.id === id)[0]
+
+  const handleAddToCart = () => {
+    cartStore.add(product)
+    navgation.goBack()
+  }
 
   return (
     <View className="flex-1">
@@ -28,6 +40,19 @@ const Product = () => {
               </Text>
           ))
         }
+      </View>
+
+      <View className="p-5 pb-5 gap-5">
+
+        <Button onPress={handleAddToCart}>
+          <Button.Icon>
+            <Feather name="plus-circle" size={20} />
+          </Button.Icon>
+
+          <Button.Text>Adicionar Pedido</Button.Text>
+        </Button>
+
+        <LinkButton href="/" title="Voltar ao cardápio"/>
       </View>
     </View>
   );
